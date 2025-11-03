@@ -1,44 +1,99 @@
-# Minimalist Portfolio Website
+# Bryan Palay - Portfolio
 
-A clean, modern portfolio website built with Next.js and Tailwind CSS, featuring smooth animations and dark/light theme support.
+> Still Learning and Making it Better! 🚀
+
+A clean, modern portfolio website showcasing my projects and skills as a Full Stack Developer, built with Next.js, TypeScript, and Shadcn UI.
 
 ## ✨ Features
 
-- **Minimalist Design** - Clean typography with Geist font and strategic use of whitespace
-- **Responsive Layout** - Mobile-first design that works on all devices
-- **Theme Toggle** - Seamless dark/light mode switching
-- **Smooth Animations** - Subtle scroll-triggered animations and hover effects
+- **Minimalist Design** - Clean typography with strategic use of whitespace
+- **Responsive Layout** - Mobile-first design that works seamlessly on all devices
+- **Theme Toggle** - Dark/light mode switching with smooth transitions
+- **Smooth Animations** - Scroll-triggered animations and interactive hover effects
 - **Modern Stack** - Built with Next.js 15, TypeScript, and Tailwind CSS
+- **Tech Stack Icons** - SVG icons for all technologies
+- **Shadcn UI Components** - Professional UI components from Shadcn registry
 
-## 🚀 Built With
+## 🚀 Tech Stack
 
-- [Next.js](https://nextjs.org/) - React framework
+- [Next.js 15](https://nextjs.org/) - React framework
 - [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [v0.dev](https://v0.dev/) - AI-powered development
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first styling
+- [Shadcn UI](https://ui.shadcn.com/) - Component library
+- [React](https://react.dev/) - UI library
+- [Prisma](https://www.prisma.io/) - Database ORM (used in projects)
+
+## 📁 Featured Projects
+
+1. **Tech Parts Inventory System** - Modern inventory management with Next.js, Prisma, and Better Auth
+2. **Serene Inn Guest House** - Guest house booking platform with TypeScript and React
+3. **A+ Quiz System** - Assessment platform with automated scoring
+4. **Dental U-Care** - Dental booking system with modern UI
 
 ## 📦 Getting Started
 
 \`\`\`bash
+
 # Clone the repository
-git clone https://github.com/felixmacaspac/v0-minimalist-portfolio.git
+
+git clone https://github.com/bry-ly/minimalist-portfolio.git
+
+# Navigate to the project directory
+
+cd minimalist-portfolio
 
 # Install dependencies
+
+pnpm install
+
+# or
+
 npm install
 
 # Run development server
+
+pnpm dev
+
+# or
+
 npm run dev
 \`\`\`
 
 Open [http://localhost:3000](http://localhost:3000) to view the portfolio.
+
+## 🎨 Project Structure
+
+\`\`\`bash
+minimalist-portfolio/
+├── app/ # Next.js app directory
+│ ├── page.tsx # Main portfolio page
+│ ├── layout.tsx # Root layout
+│ └── globals.css # Global styles
+├── components/ # React components
+│ ├── tech-icons.tsx # SVG tech and social icons
+│ ├── ui/ # Shadcn UI components
+│ └── theme-provider.tsx # Theme provider
+├── lib/ # Utility functions
+│ └── utils.ts
+└── public/ # Static assets
+└── bryan.jpg # Profile image
+\`\`\`
 
 ## 🎨 Customization
 
 The portfolio is designed to be easily customizable:
 
 - Update personal information in `app/page.tsx`
-- Modify colors and styling in `app/globals.css`
+- Modify tech stack icons in `components/tech-icons.tsx`
+- Customize colors and styling in `app/globals.css`
 - Add or remove sections as needed
+
+## 🌐 Connect with Me
+
+- **GitHub**: [@bry-ly](https://github.com/bry-ly)
+- **Facebook**: [bryan.palay.35](https://facebook.com/bryan.palay.35)
+- **Instagram**: [@aokinyccc](https://instagram.com/aokinyccc)
+- **X (Twitter)**: [@bry_ly28](https://x.com/bry_ly28)
 
 ## 📄 License
 
@@ -46,4 +101,4 @@ Open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Built with ❤️ using [v0.dev](https://v0.dev) by Felix Macaspac**
+**Built with Next.js & TypeScript by Bryan Palay** | 2025 — Present
