@@ -384,7 +384,7 @@ export default function Home() {
                 {
                   title: "Dental U-Care",
                   image: "/projects/dental.png",
-                  url: "https://github.com/bry-ly/dental-u-care",
+                  url: "https://dental-u-care.vercel.app/",
                 },
               ].map((project, index) => (
                 <Link
