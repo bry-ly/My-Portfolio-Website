@@ -23,7 +23,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
     <Html>
       <Head />
       <Preview>
-        Thank you for reaching out - I'll respond within 24-48 hours
+        Thank you for reaching out - I'll respond within 24 hours!
       </Preview>
       <Body style={{ backgroundColor: "#f9fafb", fontFamily: "sans-serif" }}>
         <Container
@@ -38,22 +38,6 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
               padding: "32px",
             }}
           >
-            {/* Profile Image */}
-            <Section style={{ textAlign: "center", marginBottom: "24px" }}>
-              <Img
-                src="https://www.bryanpalay.me/bryan.jpg"
-                alt="Bryan Palay"
-                width="100"
-                height="100"
-                style={{
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                  border: "2px solid #e5e7eb",
-                  margin: "0 auto",
-                }}
-              />
-            </Section>
-
             {/* Greeting */}
             <Heading
               style={{
