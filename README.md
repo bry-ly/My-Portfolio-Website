@@ -32,42 +32,40 @@ A clean, modern portfolio website showcasing my projects and skills as a Full St
 
 ## 📦 Getting Started
 
-\`\`\`bash
+
 
 # Clone the repository
-<<<<<<< HEAD
-
+```bash
 git clone https://github.com/bry-ly/minimalist-portfolio.git
-
+```
 # Navigate to the project directory
-
+```bash
 cd minimalist-portfolio
-=======
-git clone https://github.com/bry-ly/minimalist-portfolio.git
->>>>>>> d4e1214f33a838c6af2c2c35cca89423d7b7f672
-
+```
 # Install dependencies
-
+```bash
 pnpm install
-
+```
 # or
-
+```bash
 npm install
+```
 
 # Run development server
-
+```bash
 pnpm dev
+```
 
 # or
-
+```bash
 npm run dev
-\`\`\`
+```
 
 Open [http://localhost:3000](http://localhost:3000) to view the portfolio.
 
 ## 🎨 Project Structure
 
-\`\`\`bash
+```bash
 minimalist-portfolio/
 ├── app/ # Next.js app directory
 │ ├── page.tsx # Main portfolio page
@@ -81,7 +79,7 @@ minimalist-portfolio/
 │ └── utils.ts
 └── public/ # Static assets
 └── bryan.jpg # Profile image
-\`\`\`
+```
 
 ## 🎨 Customization
 
