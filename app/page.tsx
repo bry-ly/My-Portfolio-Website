@@ -798,6 +798,36 @@ export default function Home() {
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Link
+                          href="https://ui.shadcn.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:scale-110 transition-transform duration-200"
+                        >
+                          <TechIcons.Shadcn className="w-3.5 h-3.5" />
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Shadcn UI</p>
+                      </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Link
+                          href="https://resend.com/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:scale-110 transition-transform duration-200"
+                        >
+                          <TechIcons.Resend className="w-3.5 h-3.5" />
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Resend</p>
+                      </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Link
                           href="https://tailwindcss.com"
                           target="_blank"
                           rel="noopener noreferrer"
