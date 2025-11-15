@@ -116,6 +116,22 @@ const PROJECTS = [
     liveUrl: "https://a-plus-quiz.vercel.app/",
     githubUrl: "https://github.com/bry-ly/APlus-QuizSystem",
   },
+  {
+    year: "2025",
+    role: "Health Care",
+    company: "Personal Project",
+    description:
+      "A health care system for appointment booking and patients and their health records. It is a simple health care system that allows patients to manage their health records and get their results.",
+    tech: [
+      { name: "Next.js", icon: TechIcons.NextJS },
+      { name: "Shadcn UI", icon: TechIcons.Shadcn },
+      { name: "Better Auth", icon: TechIcons.BetterAuth },
+      { name: "Prisma", icon: TechIcons.Prisma },
+      { name: "PostgreSQL", icon: TechIcons.PostgreSQL },
+    ],
+    liveUrl: "https://health-care-rouge-theta.vercel.app/",
+    githubUrl: "https://github.com/bry-ly/Health-Care",
+  },
 ] as const;
 
 const GALLERY_PROJECTS = [
@@ -138,6 +154,11 @@ const GALLERY_PROJECTS = [
     title: "A+ Quiz",
     image: "/projects/a-plus-quiz.png",
     url: "https://a-plus-quiz.vercel.app/",
+  },
+  {
+    title: "Health Care",
+    image: "/projects/health-care.png",
+    url: "https://health-care-rouge-theta.vercel.app/",
   }
 ] as const;
 
