@@ -20,14 +20,25 @@ import {
 } from "@/components/ui/tooltip";
 
 // Constants extracted outside component to avoid recreation on every render
-const SECTION_IDS = ["intro", "work", "gallery", "activity", "connect", "contact"] as const;
+const SECTION_IDS = [
+  "intro",
+  "work",
+  "gallery",
+  "activity",
+  "connect",
+  "contact",
+] as const;
 
 const FOCUS_TECHNOLOGIES = [
   { name: "Next.js", icon: TechIcons.NextJS, color: "currentColor" },
   { name: "React", icon: TechIcons.React, color: "text-[#61DAFB]" },
   { name: "TypeScript", icon: TechIcons.TypeScript, color: "text-[#3178C6]" },
   { name: "JavaScript", icon: TechIcons.JavaScript, color: "text-[#F7DF1E]" },
-  { name: "Tailwind CSS", icon: TechIcons.TailwindCSS, color: "text-[#06B6D4]" },
+  {
+    name: "Tailwind CSS",
+    icon: TechIcons.TailwindCSS,
+    color: "text-[#06B6D4]",
+  },
   { name: "Shadcn UI", icon: TechIcons.Shadcn, color: "text-foreground" },
   { name: "Prisma", icon: TechIcons.Prisma, color: "text-[#2D3748]" },
   { name: "PostgreSQL", icon: TechIcons.PostgreSQL, color: "text-[#336791]" },
@@ -43,11 +54,11 @@ const FOCUS_TECHNOLOGIES = [
 const getIconColor = (name: string) => {
   const colorMap: Record<string, string> = {
     "Next.js": "currentColor",
-    "Prisma": "text-[#2D3748]",
-    "PostgreSQL": "text-[#336791]",
+    Prisma: "text-[#2D3748]",
+    PostgreSQL: "text-[#336791]",
     "Shadcn UI": "text-foreground",
     "Better Auth": "text-yellow-500",
-    "MongoDB": "text-[#47A248]",
+    MongoDB: "text-[#47A248]",
     "Express JS": "text-gray-400",
   };
   return colorMap[name] || "text-muted-foreground";
@@ -56,7 +67,23 @@ const getIconColor = (name: string) => {
 const PROJECTS = [
   {
     year: "2025",
-    role: "Tech Parts",
+    role: "Librarium",
+    company: "Personal Project",
+    description:
+      "A modern Library Management System providing complete solutions for managing library resources, tracking book circulation, and handling member reservations with distinct user roles and tailored dashboards.",
+    tech: [
+      { name: "Next.js", icon: TechIcons.NextJS },
+      { name: "Shadcn UI", icon: TechIcons.Shadcn },
+      { name: "Better Auth", icon: TechIcons.BetterAuth },
+      { name: "Prisma", icon: TechIcons.Prisma },
+      { name: "PostgreSQL", icon: TechIcons.PostgreSQL },
+    ],
+    liveUrl: "https://librarium-self.vercel.app/",
+    githubUrl: "https://github.com/bry-ly/Librarium",
+  },
+  {
+    year: "2025",
+    role: "Velos Inventory",
     company: "Personal Project",
     description:
       "A modern Inventory Management System built with Next.js, Prisma, PostgreSQL, Better Auth, and Shadcn UI. It provides a secure, scalable, and visually polished platform for managing products, categories, and stock.",
@@ -67,8 +94,8 @@ const PROJECTS = [
       { name: "Prisma", icon: TechIcons.Prisma },
       { name: "PostgreSQL", icon: TechIcons.PostgreSQL },
     ],
-    liveUrl: "https://techparts-pi.vercel.app/",
-    githubUrl: "https://github.com/bry-ly/tech-parts-inventory-system",
+    liveUrl: "https://velos-inve.vercel.app/",
+    githubUrl: "https://github.com/bry-ly/Velos-Inve",
   },
   {
     year: "2025",
@@ -84,7 +111,7 @@ const PROJECTS = [
       { name: "MongoDB", icon: TechIcons.MongoDB },
     ],
     liveUrl: "https://www.dentalucare.tech/",
-    githubUrl: "https://github.com/bry-ly/dental-u-care",
+    githubUrl: "https://github.com/bry-ly/Dental-U-Care",
   },
   {
     year: "2025",
@@ -99,7 +126,7 @@ const PROJECTS = [
       { name: "Express JS", icon: TechIcons.Express },
     ],
     liveUrl: "https://amethystinn.vercel.app/",
-    githubUrl: "https://github.com/bry-ly/amethystinn",
+    githubUrl: "https://github.com/bry-ly/Amethyst-Inn",
   },
   {
     year: "2025",
@@ -136,19 +163,24 @@ const PROJECTS = [
 
 const GALLERY_PROJECTS = [
   {
-    title: "Tech Parts",
-    image: "/projects/techparts.png",
-    url: "https://techparts-pi.vercel.app/",
+    title: "Librarium",
+    image: "/projects/librarium.png",
+    url: "https://librarium-self.vercel.app/",
   },
   {
-    title: "Amethyst Inn",
-    image: "/projects/amethsyt.png",
-    url: "https://amethystinn.vercel.app/",
+    title: "Velos Inventory",
+    image: "/projects/tech.png",
+    url: "https://velos-inve.vercel.app/",
   },
   {
     title: "Dental U-Care",
     image: "/projects/dental.png",
     url: "https://www.dentalucare.tech/",
+  },
+  {
+    title: "Amethyst Inn",
+    image: "/projects/amethsyt.png",
+    url: "https://amethystinn.vercel.app/",
   },
   {
     title: "A+ Quiz",
@@ -159,7 +191,7 @@ const GALLERY_PROJECTS = [
     title: "Health Care",
     image: "/projects/health-care.png",
     url: "https://health-care-rouge-theta.vercel.app/",
-  }
+  },
 ] as const;
 
 const SOCIAL_LINKS = [
@@ -218,17 +250,23 @@ export default function Home() {
   );
 
   // Memoize observer callback
-  const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("animate-fade-in-up");
-        setActiveSection(entry.target.id);
-      }
-    });
-  }, []);
+  const observerCallback = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-fade-in-up");
+          setActiveSection(entry.target.id);
+        }
+      });
+    },
+    []
+  );
 
   useEffect(() => {
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions
+    );
 
     sectionsRef.current.forEach((section) => {
       if (section) observer.observe(section);
@@ -251,54 +289,58 @@ export default function Home() {
   );
 
   // Handle form submission with useCallback
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setIsSubmitting(true);
 
-    try {
-      const response = await fetch("/api/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        toast.success("Message sent successfully!", {
-          description:
-            "Thank you for reaching out. I'll get back to you within 24hours.",
+      try {
+        const response = await fetch("/api/send", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         });
-        // Reset form
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        // Handle rate limit error specifically
-        if (response.status === 429) {
-          const resetDate = result.reset
-            ? new Date(result.reset).toLocaleTimeString()
-            : "soon";
-          toast.error("Too many requests", {
-            description: `You've reached the limit of ${
-              result.limit || 5
-            } messages per hour. Please try again at ${resetDate}.`,
+
+        const result = await response.json();
+
+        if (response.ok) {
+          toast.success("Message sent successfully!", {
+            description:
+              "Thank you for reaching out. I'll get back to you within 24hours.",
           });
+          // Reset form
+          setFormData({ name: "", email: "", message: "" });
         } else {
-          toast.error("Failed to send message", {
-            description: result.error || "Please try again later.",
-          });
+          // Handle rate limit error specifically
+          if (response.status === 429) {
+            const resetDate = result.reset
+              ? new Date(result.reset).toLocaleTimeString()
+              : "soon";
+            toast.error("Too many requests", {
+              description: `You've reached the limit of ${
+                result.limit || 5
+              } messages per hour. Please try again at ${resetDate}.`,
+            });
+          } else {
+            toast.error("Failed to send message", {
+              description: result.error || "Please try again later.",
+            });
+          }
         }
+      } catch (error) {
+        console.error("Error sending message:", error);
+        toast.error("Failed to send message", {
+          description:
+            "Please try again later or contact me directly via email.",
+        });
+      } finally {
+        setIsSubmitting(false);
       }
-    } catch (error) {
-      console.error("Error sending message:", error);
-      toast.error("Failed to send message", {
-        description: "Please try again later or contact me directly via email.",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  }, [formData]);
+    },
+    [formData]
+  );
 
   // Memoized scroll handler
   const scrollToSection = useCallback((section: string) => {
@@ -650,7 +692,9 @@ export default function Home() {
                     <div className="flex items-start gap-4">
                       <div className="p-3 rounded-xl bg-accent/50 group-hover:bg-accent transition-colors duration-300">
                         <social.icon
-                          className={`w-6 h-6 group-hover:scale-110 transition-transform duration-300 ${social.color ?? ''}`}
+                          className={`w-6 h-6 group-hover:scale-110 transition-transform duration-300 ${
+                            social.color ?? ""
+                          }`}
                         />
                       </div>
                       <div className="space-y-1.5 flex-1 min-w-0">
