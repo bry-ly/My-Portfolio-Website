@@ -1,4 +1,6 @@
 import { unstable_cache } from "next/cache";
+import type { Activity } from "@/components/kibo-ui/contribution-graph";
+import { GITHUB_USERNAME } from "@/config/site";
 
 export interface GitHubRepo {
   id: number;
@@ -10,6 +12,7 @@ export interface GitHubRepo {
   pushed_at: string;
   language: string;
   stargazers_count: number;
+  fork: boolean;
 }
 
 export interface Project {
@@ -22,8 +25,6 @@ export interface Project {
   githubUrl?: string;
   stars?: number;
 }
-
-const GITHUB_USERNAME = "bry-ly";
 
 export async function getGithubRepos(): Promise<GitHubRepo[]> {
   try {
@@ -70,3 +71,19 @@ export async function getRecentProjects(): Promise<GitHubRepo[]> {
   const repos = await getGithubRepos();
   return repos.filter((repo) => repo.description).slice(0, 6);
 }
+
+type GitHubContributionsResponse = {
+  contributions: Activity[];
+};
+
+export const getGitHubContributions = unstable_cache(
+  async () => {
+    const res = await fetch(
+      `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`
+    );
+    const data = (await res.json()) as GitHubContributionsResponse;
+    return data.contributions;
+  },
+  ["github-contributions"],
+  { revalidate: 86400 } // Cache for 1 day (86400 seconds)
+);
