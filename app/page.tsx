@@ -1,8 +1,15 @@
-import { getRecentProjects, Project } from "@/lib/github";
+import {
+  getRecentProjects,
+  getGitHubContributions,
+  Project,
+} from "@/lib/github";
 import HomePage from "@/components/home-page";
 
 export default async function Home() {
-  const repos = await getRecentProjects();
+  const [repos, contributions] = await Promise.all([
+    getRecentProjects(),
+    getGitHubContributions(),
+  ]);
 
   const projects: Project[] = repos.map((repo) => {
     // Basic mapping: use topics to guess tech stack if possible
@@ -34,7 +41,7 @@ export default async function Home() {
     };
   });
 
-  return <HomePage projects={projects} />;
+  return <HomePage projects={projects} contributions={contributions} />;
 }
 
 function capitalize(s: string) {
