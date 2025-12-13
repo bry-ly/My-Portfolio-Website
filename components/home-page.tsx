@@ -4,6 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { TechIcons, SocialIcons } from "@/components/comp/tech-icons";
+import {
+  WorkExperience,
+  ExperienceItemType,
+} from "@/components/work-experience";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,11 +23,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Project } from "@/lib/github";
+import type { Activity } from "@/components/kibo-ui/contribution-graph";
+import { GitHubContributions } from "@/components/github-contribution";
+import { Panel, PanelContent } from "@/components/ui/panel";
 
 // Constants extracted outside component to avoid recreation on every render
 const SECTION_IDS = [
   "intro",
   "work",
+  "experience",
   "gallery",
   "activity",
   "connect",
@@ -82,7 +90,7 @@ const GALLERY_PROJECTS = [
   },
   {
     title: "Velos Inventory",
-    image: "/projects/tech.png",
+    image: "/projects/velos.png",
     url: "https://velos-inve.vercel.app/",
   },
   {
@@ -136,11 +144,40 @@ const SOCIAL_LINKS = [
   },
 ] as const;
 
+const WORK_EXPERIENCES: ExperienceItemType[] = [
+  {
+    id: "freelance",
+    companyName: "Freelance",
+    isCurrentEmployer: true,
+    positions: [
+      {
+        id: "fullstack-dev",
+        title: "Full Stack Developer",
+        employmentPeriod: "2024 - Present",
+        employmentType: "Freelance",
+        icon: "code",
+        description:
+          "Building modern web applications for clients using Next.js, React, TypeScript, and various backend technologies. Focusing on creating scalable, performant, and user-friendly solutions.",
+        skills: [
+          "Next.js",
+          "React",
+          "TypeScript",
+          "Tailwind CSS",
+          "Prisma",
+          "PostgreSQL",
+        ],
+        isExpanded: true,
+      },
+    ],
+  },
+] as const;
+
 interface HomePageProps {
   projects: Project[];
+  contributions: Activity[];
 }
 
-export default function HomePage({ projects }: HomePageProps) {
+export default function HomePage({ projects, contributions }: HomePageProps) {
   const [isDark, setIsDark] = useState(true);
   const [activeSection, setActiveSection] = useState("");
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
@@ -469,9 +506,30 @@ export default function HomePage({ projects }: HomePageProps) {
         </section>
 
         <section
-          id="gallery"
+          id="experience"
           ref={(el) => {
             sectionsRef.current[2] = el;
+          }}
+          className="py-20 sm:py-32 opacity-0"
+        >
+          <div className="space-y-12 sm:space-y-16">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+              <h2 className="text-3xl sm:text-4xl font-light">
+                Work Experience
+              </h2>
+              <div className="text-sm text-muted-foreground font-mono">
+                MY JOURNEY
+              </div>
+            </div>
+
+            <WorkExperience experiences={[...WORK_EXPERIENCES]} />
+          </div>
+        </section>
+
+        <section
+          id="gallery"
+          ref={(el) => {
+            sectionsRef.current[3] = el;
           }}
           className="py-20 sm:py-32 opacity-0"
         >
@@ -530,17 +588,39 @@ export default function HomePage({ projects }: HomePageProps) {
         <section
           id="activity"
           ref={(el) => {
-            sectionsRef.current[3] = el;
+            sectionsRef.current[4] = el;
           }}
           className="py-20 sm:py-32 opacity-0"
         >
           <LiveActivity />
+
+          {/* GitHub Contribution Graph */}
+          {contributions.length > 0 && (
+            <div className="mt-16 space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                <h3 className="text-2xl sm:text-3xl font-light">
+                  GitHub Contributions
+                </h3>
+                <div className="text-sm text-muted-foreground font-mono">
+                  CODING ACTIVITY
+                </div>
+              </div>
+
+              <Panel className="rounded-lg">
+                <PanelContent>
+                  <TooltipProvider>
+                    <GitHubContributions contributions={contributions} />
+                  </TooltipProvider>
+                </PanelContent>
+              </Panel>
+            </div>
+          )}
         </section>
 
         <section
           id="connect"
           ref={(el) => {
-            sectionsRef.current[4] = el;
+            sectionsRef.current[5] = el;
           }}
           className="py-20 sm:py-32 opacity-0"
         >
@@ -647,7 +727,7 @@ export default function HomePage({ projects }: HomePageProps) {
         <section
           id="contact"
           ref={(el) => {
-            sectionsRef.current[5] = el;
+            sectionsRef.current[6] = el;
           }}
           className="py-20 sm:py-32 opacity-0"
           aria-labelledby="contact-heading"
