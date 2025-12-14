@@ -85,5 +85,5 @@ export const getGitHubContributions = unstable_cache(
     return data.contributions;
   },
   ["github-contributions"],
-  { revalidate: 86400 } // Cache for 1 day (86400 seconds)
+  { revalidate: 3600 } // Cache for 1 hour (3600 seconds) to keep contributions up-to-date
 );

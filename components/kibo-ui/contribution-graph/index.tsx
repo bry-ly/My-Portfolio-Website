@@ -19,7 +19,9 @@ import {
   type HTMLAttributes,
   type ReactNode,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
 } from "react";
 import { cn } from "@/lib/utils";
 
@@ -354,6 +356,7 @@ export type ContributionGraphCalendarProps = Omit<
   "children"
 > & {
   hideMonthLabels?: boolean;
+  scrollToEnd?: boolean;
   className?: string;
   children: (props: {
     activity: Activity;
@@ -364,20 +367,30 @@ export type ContributionGraphCalendarProps = Omit<
 
 export const ContributionGraphCalendar = ({
   hideMonthLabels = false,
+  scrollToEnd = true,
   className,
   children,
   ...props
 }: ContributionGraphCalendarProps) => {
   const { weeks, width, height, blockSize, blockMargin, labels } =
     useContributionGraph();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const monthLabels = useMemo(
     () => getMonthLabels(weeks, labels.months),
     [weeks, labels.months]
   );
 
+  // Auto-scroll to the end (most recent days) on mount
+  useEffect(() => {
+    if (scrollToEnd && scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
+    }
+  }, [scrollToEnd, weeks]);
+
   return (
     <div
+      ref={scrollRef}
       className={cn("max-w-full overflow-x-auto overflow-y-hidden", className)}
       {...props}
     >
