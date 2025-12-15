@@ -1,3 +1,28 @@
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { TechIcons, SocialIcons } from "@/components/comp/tech-icons";
+import {
+  WorkExperience,
+  ExperienceItemType,
+} from "@/components/work-experience";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
+import { toast } from "sonner";
+import { InfiniteTechSlider } from "@/components/ui/infinite-tech-slider";
+import { LiveActivity } from "@/components/comp/live-activity";
+import { UptimeTimer } from "@/components/comp/uptime-timer";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Project } from "@/lib/github";
 import type { Activity } from "@/components/kibo-ui/contribution-graph";
 import { GitHubContributions } from "@/components/github-contribution";
 import { Panel, PanelContent } from "@/components/ui/panel";
