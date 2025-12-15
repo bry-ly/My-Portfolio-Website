@@ -56,11 +56,16 @@ export const WorkExperience = React.memo(function WorkExperience({
   experiences: ExperienceItemType[];
 }) {
   return (
-    <div className={cn("bg-background px-4", className)}>
+    <section 
+      className={cn("bg-background px-4", className)}
+      aria-label="Work experience"
+      role="region"
+    >
+      <h2 className="sr-only">Work Experience</h2>
       {experiences.map((experience) => (
         <ExperienceItem key={experience.id} experience={experience} />
       ))}
-    </div>
+    </section>
   );
 });
 
@@ -72,16 +77,16 @@ export const ExperienceItem = React.memo(function ExperienceItem({
   experience: ExperienceItemType;
 }) {
   return (
-    <div className="space-y-4 py-4">
-      <div className="not-prose flex items-center gap-3">
+    <article className="space-y-4 py-4">
+      <header className="not-prose flex items-center gap-3">
         <div
           className="flex size-6 shrink-0 items-center justify-center"
-          aria-hidden
+          aria-hidden="true"
         >
           {experience.companyLogo ? (
             <Image
               src={experience.companyLogo}
-              alt={experience.companyName}
+              alt=""
               width={24}
               height={24}
               quality={100}
@@ -89,7 +94,7 @@ export const ExperienceItem = React.memo(function ExperienceItem({
               unoptimized
             />
           ) : (
-            <span className="flex size-2 rounded-full bg-zinc-300 dark:bg-zinc-600" />
+            <span className="flex size-2 rounded-full bg-zinc-300 dark:bg-zinc-600" aria-hidden="true" />
           )}
         </div>
 
@@ -99,19 +104,19 @@ export const ExperienceItem = React.memo(function ExperienceItem({
 
         {experience.isCurrentEmployer && (
           <span className="relative flex items-center justify-center">
-            <span className="absolute inline-flex size-3 animate-ping rounded-full bg-info opacity-50" />
-            <span className="relative inline-flex size-2 rounded-full bg-info" />
+            <span className="absolute inline-flex size-3 animate-ping rounded-full bg-info opacity-50" aria-hidden="true" />
+            <span className="relative inline-flex size-2 rounded-full bg-info" aria-hidden="true" />
             <span className="sr-only">Current Employer</span>
           </span>
         )}
-      </div>
+      </header>
 
       <div className="relative space-y-4 before:absolute before:left-3 before:h-full before:w-px before:bg-border">
         {experience.positions.map((position) => (
           <ExperiencePositionItem key={position.id} position={position} />
         ))}
       </div>
-    </div>
+    </article>
   );
 });
 
@@ -129,14 +134,15 @@ export const ExperiencePositionItem = React.memo(function ExperiencePositionItem
       <div className="relative last:before:absolute last:before:h-full last:before:w-4 last:before:bg-background">
         <CollapsibleTrigger
           className={cn(
-            "group/experience not-prose block w-full text-left select-none",
+            "group/experience not-prose block w-full text-left select-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background rounded-lg",
             "relative before:absolute before:-top-1 before:-right-1 before:-bottom-1.5 before:left-7 before:rounded-lg hover:before:bg-muted/50"
           )}
+          aria-describedby={`position-${position.id}-details`}
         >
           <div className="relative z-1 mb-1 flex items-center gap-3">
             <div
               className="flex size-6 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground"
-              aria-hidden
+              aria-hidden="true"
             >
               <ExperienceIcon className="size-4" />
             </div>
@@ -147,50 +153,53 @@ export const ExperiencePositionItem = React.memo(function ExperiencePositionItem
 
             <div
               className="shrink-0 text-muted-foreground [&_svg]:size-4"
-              aria-hidden
+              aria-hidden="true"
             >
               <ChevronsDownUpIcon className="hidden group-data-[state=open]/experience:block" />
               <ChevronsUpDownIcon className="hidden group-data-[state=closed]/experience:block" />
             </div>
           </div>
 
-          <div className="relative z-1 flex items-center gap-2 pl-9 text-sm text-muted-foreground">
+          <div 
+            id={`position-${position.id}-details`}
+            className="relative z-1 flex flex-col sm:flex-row sm:items-center gap-2 pl-9 text-sm text-muted-foreground"
+          >
             {position.employmentType && (
-              <>
-                <dl>
-                  <dt className="sr-only">Employment Type</dt>
-                  <dd>{position.employmentType}</dd>
-                </dl>
-
-                <Separator
-                  className="data-[orientation=vertical]:h-4"
-                  orientation="vertical"
-                />
-              </>
+              <dl className="flex items-center gap-2">
+                <dt className="sr-only">Employment Type</dt>
+                <dd>{position.employmentType}</dd>
+              </dl>
             )}
 
-            <dl>
+            <dl className="flex items-center gap-2">
               <dt className="sr-only">Employment Period</dt>
-              <dd>{position.employmentPeriod}</dd>
+              <dd>
+                <time dateTime={position.employmentPeriod}>
+                  {position.employmentPeriod}
+                </time>
+              </dd>
             </dl>
           </div>
         </CollapsibleTrigger>
 
         <CollapsibleContent className="overflow-hidden duration-300 data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
           {position.description && (
-            <Prose className="pt-2 pl-9">
+            <Prose className="pt-2 pl-9" role="region" aria-label="Job description">
               <ReactMarkdown>{position.description}</ReactMarkdown>
             </Prose>
           )}
 
           {Array.isArray(position.skills) && position.skills.length > 0 && (
-            <ul className="not-prose flex flex-wrap gap-1.5 pt-2 pl-9">
-              {position.skills.map((skill) => (
-                <li key={skill} className="flex">
-                  <Skill>{skill}</Skill>
-                </li>
-              ))}
-            </ul>
+            <div className="pt-2 pl-9" role="region" aria-label="Skills used">
+              <h5 className="sr-only">Skills Used</h5>
+              <ul className="not-prose flex flex-wrap gap-1.5">
+                {position.skills.map((skill) => (
+                  <li key={skill} className="flex">
+                    <Skill>{skill}</Skill>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </CollapsibleContent>
       </div>

@@ -58,24 +58,53 @@ export const HomeShell = React.memo(function HomeShell({
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-x-hidden">
-      <nav className="fixed left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
+      {/* Skip to content link for screen readers */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        aria-label="Skip to main content"
+      >
+        Skip to main content
+      </a>
+
+      {/* Section navigation with enhanced accessibility */}
+      <nav 
+        className="fixed left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:block" 
+        aria-label="Section navigation"
+        role="navigation"
+      >
         <div className="flex flex-col gap-4">
-          {SECTION_IDS.map((section) => (
-            <button
-              key={section}
-              onClick={() => scrollToSection(section)}
-              className={`w-2 h-8 rounded-full transition-all duration-500 ${
-                activeSection === section
-                  ? "bg-foreground"
-                  : "bg-muted-foreground/30 hover:bg-muted-foreground/60"
-              }`}
-              aria-label={`Navigate to ${section}`}
-            />
-          ))}
+          {SECTION_IDS.map((section) => {
+            const sectionLabel = section
+              .split('-')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ');
+            
+            return (
+              <button
+                key={section}
+                onClick={() => scrollToSection(section)}
+                className={`w-2 h-8 rounded-full transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background ${
+                  activeSection === section
+                    ? "bg-foreground"
+                    : "bg-muted-foreground/30 hover:bg-muted-foreground/60 focus:bg-muted-foreground/60"
+                }`}
+                aria-label={`Navigate to ${sectionLabel} section`}
+                aria-current={activeSection === section ? "page" : undefined}
+              />
+            );
+          })}
         </div>
       </nav>
 
-      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-16">{children}</main>
+      <main 
+        id="main-content" 
+        className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-16"
+        role="main"
+        tabIndex={-1}
+      >
+        {children}
+      </main>
 
       <div className="fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
     </div>
