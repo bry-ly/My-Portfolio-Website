@@ -1,3 +1,5 @@
+"use client";
+
 import {
   BriefcaseBusinessIcon,
   ChevronsDownUpIcon,
@@ -25,45 +27,28 @@ const iconMap = {
   education: GraduationCapIcon,
 } as const;
 
-/**
- * Represents the valid keys of the `iconMap` object, used to specify the type of icon
- * associated with an experience position.
- */
 export type ExperiencePositionIconType = keyof typeof iconMap;
 
 export type ExperiencePositionItemType = {
-  /** Unique identifier for the position */
   id: string;
-  /** The job title or position name */
   title: string;
-  /** The period during which the position was held (e.g., "Jan 2020 - Dec 2021") */
   employmentPeriod: string;
-  /** The type of employment (e.g., "Full-time", "Part-time", "Contract") */
   employmentType?: string;
-  /** A brief description of the position or responsibilities */
   description?: string;
-  /** An icon representing the position */
   icon?: ExperiencePositionIconType;
-  /** A list of skills associated with the position */
   skills?: string[];
-  /** Indicates if the position details are expanded in the UI */
   isExpanded?: boolean;
 };
 
 export type ExperienceItemType = {
-  /** Unique identifier for the experience item */
   id: string;
-  /** Name of the company where the experience was gained */
   companyName: string;
-  /** URL or path to the company's logo image */
   companyLogo?: string;
-  /** List of positions held at the company */
   positions: ExperiencePositionItemType[];
-  /** Indicates if this is the user's current employer */
   isCurrentEmployer?: boolean;
 };
 
-export function WorkExperience({
+export const WorkExperience = React.memo(function WorkExperience({
   className,
   experiences,
 }: {
@@ -77,9 +62,11 @@ export function WorkExperience({
       ))}
     </div>
   );
-}
+});
 
-export function ExperienceItem({
+WorkExperience.displayName = "WorkExperience";
+
+export const ExperienceItem = React.memo(function ExperienceItem({
   experience,
 }: {
   experience: ExperienceItemType;
@@ -126,9 +113,11 @@ export function ExperienceItem({
       </div>
     </div>
   );
-}
+});
 
-export function ExperiencePositionItem({
+ExperienceItem.displayName = "ExperienceItem";
+
+export const ExperiencePositionItem = React.memo(function ExperiencePositionItem({
   position,
 }: {
   position: ExperiencePositionItemType;
@@ -196,8 +185,8 @@ export function ExperiencePositionItem({
 
           {Array.isArray(position.skills) && position.skills.length > 0 && (
             <ul className="not-prose flex flex-wrap gap-1.5 pt-2 pl-9">
-              {position.skills.map((skill, index) => (
-                <li key={index} className="flex">
+              {position.skills.map((skill) => (
+                <li key={skill} className="flex">
                   <Skill>{skill}</Skill>
                 </li>
               ))}
@@ -207,7 +196,9 @@ export function ExperiencePositionItem({
       </div>
     </Collapsible>
   );
-}
+});
+
+ExperiencePositionItem.displayName = "ExperiencePositionItem";
 
 function Prose({ className, ...props }: React.ComponentProps<"div">) {
   return (
