@@ -3,16 +3,14 @@ import {
   getGitHubContributions,
   Project,
 } from "@/lib/github";
-import { getBlogPosts } from "@/lib/cms";
 import HomePage from "@/components/home-page";
 
 export const revalidate = 3600;
 
 export default async function Home() {
-  const [repos, contributions, blogPosts] = await Promise.all([
+  const [repos, contributions] = await Promise.all([
     getRecentProjects(),
     getGitHubContributions(),
-    getBlogPosts(3),
   ]);
 
   const projects: Project[] = repos.map((repo) => {
@@ -45,7 +43,7 @@ export default async function Home() {
     };
   });
 
-  return <HomePage projects={projects} contributions={contributions} blogPosts={blogPosts} />;
+  return <HomePage projects={projects} contributions={contributions} />;
 }
 
 function capitalize(s: string) {
