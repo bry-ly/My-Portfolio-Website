@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { format } from "date-fns";
 import { LoaderIcon } from "lucide-react";
 
@@ -20,7 +21,7 @@ import {
 import { GITHUB_USERNAME } from "@/config/site";
 import { cn } from "@/lib/utils";
 
-export function GitHubContributions({
+export const GitHubContributions = React.memo(function GitHubContributions({
   contributions,
 }: {
   contributions: Activity[];
@@ -58,8 +59,8 @@ export function GitHubContributions({
 
             <TooltipContent className="font-sans" sideOffset={0}>
               <p>
-                {activity.count} contribution{activity.count > 1 ? "s" : null}{" "}
-                on {format(new Date(activity.date), "dd.MM.yyyy")}
+                {activity.count} contribution{activity.count > 1 ? "s" : null} on{" "}
+                {format(new Date(activity.date), "dd.MM.yyyy")}
               </p>
             </TooltipContent>
           </Tooltip>
@@ -107,7 +108,9 @@ export function GitHubContributions({
       </ContributionGraphFooter>
     </ContributionGraph>
   );
-}
+});
+
+GitHubContributions.displayName = "GitHubContributions";
 
 export function GitHubContributionFallback() {
   return (
