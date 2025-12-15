@@ -744,7 +744,7 @@ export default function HomePage({ projects, contributions }: HomePageProps) {
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   Have a project in mind or want to collaborate? Feel free to
-                  reach out! I typically respond within 24 hours.
+                  reach out! I typically respond within 12hours.
                 </p>
               </div>
               {/* Contact Form */}
