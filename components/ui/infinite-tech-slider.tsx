@@ -37,6 +37,20 @@ export const InfiniteTechSlider = React.memo(function InfiniteTechSlider({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isInView, setIsInView] = useState(true);
   const [isPageVisible, setIsPageVisible] = useState(true);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // Check for reduced motion preference
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -74,35 +88,59 @@ export const InfiniteTechSlider = React.memo(function InfiniteTechSlider({
     () => ({
       animationDuration: `${speed}s`,
       animationDirection: direction === "right" ? "reverse" : "normal",
-      animationPlayState: isInView && isPageVisible ? "running" : "paused",
+      animationPlayState: isInView && isPageVisible && !prefersReducedMotion ? "running" : "paused",
       width: "max-content",
     }),
-    [speed, direction, isInView, isPageVisible]
+    [speed, direction, isInView, isPageVisible, prefersReducedMotion]
   );
 
   return (
-    <div
-      ref={containerRef}
-      className={cn(
-        "w-full overflow-x-hidden overflow-y-visible touch-none pointer-events-none",
-        className
-      )}
-      style={maskStyle}
-    >
-      <div
-        className={cn(
-          "flex gap-6 flex-nowrap animate-infinite-scroll whitespace-nowrap will-change-transform"
-        )}
-        style={animationStyle}
+    <>
+      {/* Screen reader announcement for animation state */}
+      <div 
+        className="sr-only" 
+        aria-live="polite"
+        aria-atomic="true"
       >
-        {technologies.map((tech, index) => (
-          <TechItem key={`tech-${index}`} tech={tech} keyPrefix="tech" />
-        ))}
-        {technologies.map((tech, index) => (
-          <TechItem key={`tech-dup-${index}`} tech={tech} keyPrefix="tech-dup" />
-        ))}
+        {prefersReducedMotion ? "Animations paused due to reduced motion preference" : null}
       </div>
-    </div>
+      
+      <div
+        ref={containerRef}
+        className={cn(
+          "w-full overflow-x-hidden overflow-y-visible touch-none pointer-events-none",
+          className
+        )}
+        style={maskStyle}
+        role="region"
+        aria-label="Technology stack"
+        aria-roledescription="scrolling list"
+      >
+        {prefersReducedMotion ? (
+          // Static fallback for reduced motion users
+          <div className="flex gap-2 flex-wrap">
+            {technologies.map((tech, index) => (
+              <TechItem key={`tech-static-${index}`} tech={tech} keyPrefix="tech" />
+            ))}
+          </div>
+        ) : (
+          // Animated version
+          <div
+            className={cn(
+              "flex gap-6 flex-nowrap animate-infinite-scroll whitespace-nowrap will-change-transform"
+            )}
+            style={animationStyle}
+          >
+            {technologies.map((tech, index) => (
+              <TechItem key={`tech-${index}`} tech={tech} keyPrefix="tech" />
+            ))}
+            {technologies.map((tech, index) => (
+              <TechItem key={`tech-dup-${index}`} tech={tech} keyPrefix="tech-dup" />
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 });
 
