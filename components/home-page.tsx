@@ -1,31 +1,8 @@
-"use client";
-
-import Link from "next/link";
-import Image from "next/image";
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { TechIcons, SocialIcons } from "@/components/comp/tech-icons";
-import {
-  WorkExperience,
-  ExperienceItemType,
-} from "@/components/work-experience";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
-import { toast } from "sonner";
-import { InfiniteTechSlider } from "@/components/ui/infinite-tech-slider";
-import { LiveActivity } from "@/components/comp/live-activity";
-import { UptimeTimer } from "@/components/comp/uptime-timer";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Project } from "@/lib/github";
 import type { Activity } from "@/components/kibo-ui/contribution-graph";
 import { GitHubContributions } from "@/components/github-contribution";
 import { Panel, PanelContent } from "@/components/ui/panel";
+import { BlogSection } from "@/components/blog/blog-section";
+import type { BlogPost } from "@/lib/cms";
 
 // Constants extracted outside component to avoid recreation on every render
 const SECTION_IDS = [
@@ -33,6 +10,7 @@ const SECTION_IDS = [
   "work",
   "experience",
   "gallery",
+  "blog",
   "activity",
   "connect",
   "contact",
@@ -177,7 +155,7 @@ interface HomePageProps {
   contributions: Activity[];
 }
 
-export default function HomePage({ projects, contributions }: HomePageProps) {
+export default function HomePage({ projects, contributions, blogPosts }: HomePageProps) {
   const [isDark, setIsDark] = useState(true);
   const [activeSection, setActiveSection] = useState("");
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
@@ -586,9 +564,23 @@ export default function HomePage({ projects, contributions }: HomePageProps) {
         </section>
 
         <section
-          id="activity"
+          id="blog"
           ref={(el) => {
             sectionsRef.current[4] = el;
+          }}
+          className="py-20 sm:py-32 opacity-0"
+          aria-labelledby="blog-heading"
+        >
+          <div id="blog-heading" className="sr-only">
+            Blog Section
+          </div>
+          <BlogSection posts={blogPosts} />
+        </section>
+
+        <section
+          id="activity"
+          ref={(el) => {
+            sectionsRef.current[5] = el;
           }}
           className="py-20 sm:py-32 opacity-0"
         >
@@ -620,7 +612,7 @@ export default function HomePage({ projects, contributions }: HomePageProps) {
         <section
           id="connect"
           ref={(el) => {
-            sectionsRef.current[5] = el;
+            sectionsRef.current[6] = el;
           }}
           className="py-20 sm:py-32 opacity-0"
         >
@@ -727,7 +719,7 @@ export default function HomePage({ projects, contributions }: HomePageProps) {
         <section
           id="contact"
           ref={(el) => {
-            sectionsRef.current[6] = el;
+            sectionsRef.current[7] = el;
           }}
           className="py-20 sm:py-32 opacity-0"
           aria-labelledby="contact-heading"

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface Tech {
@@ -16,14 +16,16 @@ interface InfiniteTechSliderProps {
   direction?: "left" | "right";
 }
 
-const TechItem = React.memo(({ tech, keyPrefix }: { tech: Tech; keyPrefix: string }) => (
-  <div className="flex-shrink-0 flex items-center gap-2 px-3 py-2">
-    <tech.icon className={`w-4 h-4 ${tech.color}`} />
-    <span className="text-xs font-medium text-foreground whitespace-nowrap">
-      {tech.name}
-    </span>
-  </div>
-));
+const TechItem = React.memo(
+  ({ tech }: { tech: Tech; keyPrefix: string }) => (
+    <div className="flex-shrink-0 flex items-center gap-2 px-3 py-2">
+      <tech.icon className={`w-4 h-4 ${tech.color}`} />
+      <span className="text-xs font-medium text-foreground whitespace-nowrap">
+        {tech.name}
+      </span>
+    </div>
+  )
+);
 TechItem.displayName = "TechItem";
 
 export const InfiniteTechSlider = React.memo(function InfiniteTechSlider({
@@ -32,7 +34,32 @@ export const InfiniteTechSlider = React.memo(function InfiniteTechSlider({
   speed = 30,
   direction = "left",
 }: InfiniteTechSliderProps) {
-  // Memoize mask style to avoid recreating on every render
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isInView, setIsInView] = useState(true);
+  const [isPageVisible, setIsPageVisible] = useState(true);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(Boolean(entry?.isIntersecting)),
+      { rootMargin: "200px 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const onVisibilityChange = () => setIsPageVisible(!document.hidden);
+    onVisibilityChange();
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, []);
+
   const maskStyle = useMemo(
     () => ({
       maskImage:
@@ -43,18 +70,19 @@ export const InfiniteTechSlider = React.memo(function InfiniteTechSlider({
     []
   );
 
-  // Memoize animation style
   const animationStyle = useMemo(
     () => ({
       animationDuration: `${speed}s`,
       animationDirection: direction === "right" ? "reverse" : "normal",
+      animationPlayState: isInView && isPageVisible ? "running" : "paused",
       width: "max-content",
     }),
-    [speed, direction]
+    [speed, direction, isInView, isPageVisible]
   );
 
   return (
     <div
+      ref={containerRef}
       className={cn(
         "w-full overflow-x-hidden overflow-y-visible touch-none pointer-events-none",
         className
@@ -77,3 +105,5 @@ export const InfiniteTechSlider = React.memo(function InfiniteTechSlider({
     </div>
   );
 });
+
+InfiniteTechSlider.displayName = "InfiniteTechSlider";
