@@ -57,15 +57,19 @@ export async function getGithubRepos(): Promise<GitHubRepo[]> {
   }
 }
 
-export async function getFeaturedProjects(): Promise<GitHubRepo[]> {
-  const repos = await getGithubRepos();
-  // Logic to select featured projects.
-  // valid criteria: has 'portfolio' topic, or just the latest 6 non-trivial ones.
-  // For now, let's take the top 6 most recently pushed non-forks that have a description.
-  return repos
-    .filter((repo) => repo.description && repo.topics.includes("featured"))
-    .slice(0, 6);
-}
+export const getFeaturedProjects = unstable_cache(
+  async (): Promise<GitHubRepo[]> => {
+    const repos = await getGithubRepos();
+    // Logic to select featured projects.
+    // valid criteria: has 'portfolio' topic, or just the latest 6 non-trivial ones.
+    // For now, let's take the top 6 most recently pushed non-forks that have a description.
+    return repos
+      .filter((repo) => repo.description && repo.topics.includes("featured"))
+      .slice(0, 6);
+  },
+  ["featured-projects"],
+  { revalidate: 3600 } // Cache for 1 hour
+);
 
 export const getRecentProjects = unstable_cache(
   async (): Promise<GitHubRepo[]> => {
