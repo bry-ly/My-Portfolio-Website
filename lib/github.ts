@@ -67,10 +67,14 @@ export async function getFeaturedProjects(): Promise<GitHubRepo[]> {
     .slice(0, 6);
 }
 
-export async function getRecentProjects(): Promise<GitHubRepo[]> {
-  const repos = await getGithubRepos();
-  return repos.filter((repo) => repo.description).slice(0, 6);
-}
+export const getRecentProjects = unstable_cache(
+  async (): Promise<GitHubRepo[]> => {
+    const repos = await getGithubRepos();
+    return repos.filter((repo) => repo.description).slice(0, 6);
+  },
+  ["recent-projects"],
+  { revalidate: 3600 } // Cache for 1 hour
+);
 
 type GitHubContributionsResponse = {
   contributions: Activity[];
