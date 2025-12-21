@@ -74,7 +74,8 @@ export const getFeaturedProjects = unstable_cache(
 export const getRecentProjects = unstable_cache(
   async (): Promise<GitHubRepo[]> => {
     const repos = await getGithubRepos();
-    return repos.filter((repo) => repo.description).slice(0, 6);
+    // Show all recent repos (description is optional, fallback handled in page.tsx)
+    return repos.slice(0, 6);
   },
   ["recent-projects"],
   { revalidate: 3600 } // Cache for 1 hour
