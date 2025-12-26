@@ -115,6 +115,99 @@ const GALLERY_PROJECTS = [
   },
 ] as const;
 
+// Static featured projects - no longer fetched from GitHub
+const FEATURED_PROJECTS: Project[] = [
+  {
+    year: "2024",
+    role: "Librarium",
+    company: "Personal Project",
+    description:
+      "A modern library management system with book tracking, user authentication, and real-time updates.",
+    tech: [
+      { name: "Next.js" },
+      { name: "TypeScript" },
+      { name: "Prisma" },
+      { name: "PostgreSQL" },
+      { name: "Tailwind CSS" },
+    ],
+    liveUrl: "https://librarium-self.vercel.app/",
+    githubUrl: "https://github.com/bry-ly/librarium",
+  },
+  {
+    year: "2024",
+    role: "Velos Inventory",
+    company: "Personal Project",
+    description:
+      "Inventory management system for tracking products, stock levels, and sales analytics.",
+    tech: [
+      { name: "Next.js" },
+      { name: "TypeScript" },
+      { name: "Prisma" },
+      { name: "MongoDB" },
+      { name: "Tailwind CSS" },
+    ],
+    liveUrl: "https://velos-inve.vercel.app/",
+    githubUrl: "https://github.com/bry-ly/velos-inventory",
+  },
+  {
+    year: "2024",
+    role: "Dental U-Care",
+    company: "Client Project",
+    description:
+      "A dental clinic management platform with appointment scheduling and patient records.",
+    tech: [
+      { name: "Next.js" },
+      { name: "TypeScript" },
+      { name: "Prisma" },
+      { name: "PostgreSQL" },
+      { name: "Tailwind CSS" },
+    ],
+    liveUrl: "https://www.dentalucare.tech/",
+  },
+  {
+    year: "2024",
+    role: "Amethyst Inn",
+    company: "Client Project",
+    description:
+      "Hotel booking and reservation system with room management and guest services.",
+    tech: [
+      { name: "Next.js" },
+      { name: "TypeScript" },
+      { name: "Prisma" },
+      { name: "PostgreSQL" },
+      { name: "Tailwind CSS" },
+    ],
+    liveUrl: "https://amethystinn.vercel.app/",
+    githubUrl: "https://github.com/bry-ly/amethyst-inn",
+  },
+  {
+    year: "2024",
+    role: "A+ Quiz",
+    company: "Personal Project",
+    description:
+      "Interactive quiz application with multiple question types and score tracking.",
+    tech: [{ name: "React" }, { name: "TypeScript" }, { name: "Tailwind CSS" }],
+    liveUrl: "https://a-plus-quiz.vercel.app/",
+    githubUrl: "https://github.com/bry-ly/a-plus-quiz",
+  },
+  {
+    year: "2024",
+    role: "Health Care",
+    company: "Personal Project",
+    description:
+      "Healthcare management system for patient appointments and medical records.",
+    tech: [
+      { name: "Next.js" },
+      { name: "TypeScript" },
+      { name: "Prisma" },
+      { name: "PostgreSQL" },
+      { name: "Tailwind CSS" },
+    ],
+    liveUrl: "https://health-care-rouge-theta.vercel.app/",
+    githubUrl: "https://github.com/bry-ly/health-care",
+  },
+];
+
 const SOCIAL_LINKS = [
   {
     name: "GitHub",
@@ -173,11 +266,10 @@ const WORK_EXPERIENCES: ExperienceItemType[] = [
 ] as const;
 
 interface HomePageProps {
-  projects: Project[];
   contributions: Activity[];
 }
 
-export default function HomePage({ projects, contributions }: HomePageProps) {
+export default function HomePage({ contributions }: HomePageProps) {
   const [isDark, setIsDark] = useState(true);
   const [activeSection, setActiveSection] = useState("");
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
@@ -419,7 +511,7 @@ export default function HomePage({ projects, contributions }: HomePageProps) {
             </div>
 
             <div className="space-y-8 sm:space-y-12">
-              {projects.map((job, index) => (
+              {FEATURED_PROJECTS.map((job, index) => (
                 <div
                   key={index}
                   className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-border/50 hover:border-border transition-colors duration-500"
