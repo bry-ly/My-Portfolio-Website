@@ -34,7 +34,6 @@ const SECTION_IDS = [
   "experience",
   "gallery",
   "activity",
-  "connect",
   "contact",
 ] as const;
 
@@ -124,11 +123,11 @@ const FEATURED_PROJECTS: Project[] = [
     description:
       "A modern library management system with book tracking, user authentication, and real-time updates.",
     tech: [
-      { name: "Next.js" },
+      { name: "NextJS" },
       { name: "TypeScript" },
       { name: "Prisma" },
       { name: "PostgreSQL" },
-      { name: "Tailwind CSS" },
+      { name: "TailwindCSS" },
     ],
     liveUrl: "https://librarium-self.vercel.app/",
     githubUrl: "https://github.com/bry-ly/librarium",
@@ -140,11 +139,11 @@ const FEATURED_PROJECTS: Project[] = [
     description:
       "Inventory management system for tracking products, stock levels, and sales analytics.",
     tech: [
-      { name: "Next.js" },
+      { name: "NextJS" },
       { name: "TypeScript" },
       { name: "Prisma" },
       { name: "MongoDB" },
-      { name: "Tailwind CSS" },
+      { name: "TailwindCSS" },
     ],
     liveUrl: "https://velos-inve.vercel.app/",
     githubUrl: "https://github.com/bry-ly/velos-inventory",
@@ -156,11 +155,11 @@ const FEATURED_PROJECTS: Project[] = [
     description:
       "A dental clinic management platform with appointment scheduling and patient records.",
     tech: [
-      { name: "Next.js" },
+      { name: "NextJS" },
       { name: "TypeScript" },
       { name: "Prisma" },
       { name: "PostgreSQL" },
-      { name: "Tailwind CSS" },
+      { name: "TailwindCSS" },
     ],
     liveUrl: "https://www.dentalucare.tech/",
   },
@@ -171,11 +170,11 @@ const FEATURED_PROJECTS: Project[] = [
     description:
       "Hotel booking and reservation system with room management and guest services.",
     tech: [
-      { name: "Next.js" },
+      { name: "NextJS" },
       { name: "TypeScript" },
       { name: "Prisma" },
       { name: "PostgreSQL" },
-      { name: "Tailwind CSS" },
+      { name: "TailwindCSS" },
     ],
     liveUrl: "https://amethystinn.vercel.app/",
     githubUrl: "https://github.com/bry-ly/amethyst-inn",
@@ -186,7 +185,7 @@ const FEATURED_PROJECTS: Project[] = [
     company: "Personal Project",
     description:
       "Interactive quiz application with multiple question types and score tracking.",
-    tech: [{ name: "React" }, { name: "TypeScript" }, { name: "Tailwind CSS" }],
+    tech: [{ name: "React" }, { name: "TypeScript" }, { name: "TailwindCSS" }],
     liveUrl: "https://a-plus-quiz.vercel.app/",
     githubUrl: "https://github.com/bry-ly/a-plus-quiz",
   },
@@ -197,11 +196,11 @@ const FEATURED_PROJECTS: Project[] = [
     description:
       "Healthcare management system for patient appointments and medical records.",
     tech: [
-      { name: "Next.js" },
+      { name: "NextJS" },
       { name: "TypeScript" },
       { name: "Prisma" },
       { name: "PostgreSQL" },
-      { name: "Tailwind CSS" },
+      { name: "TailwindCSS" },
     ],
     liveUrl: "https://health-care-rouge-theta.vercel.app/",
     githubUrl: "https://github.com/bry-ly/health-care",
@@ -388,8 +387,9 @@ export default function HomePage({ contributions }: HomePageProps) {
     [formData]
   );
 
-  // Memoized scroll handler
+  // Memoized scroll handler - also sets activeSection for immediate feedback
   const scrollToSection = useCallback((section: string) => {
+    setActiveSection(section);
     document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
@@ -418,7 +418,7 @@ export default function HomePage({ contributions }: HomePageProps) {
           ref={(el) => {
             sectionsRef.current[0] = el;
           }}
-          className="min-h-screen flex items-center opacity-0"
+          className="min-h-screen flex items-center"
         >
           <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
             <div className="lg:col-span-3 space-y-6 sm:space-y-8">
@@ -498,7 +498,7 @@ export default function HomePage({ contributions }: HomePageProps) {
           ref={(el) => {
             sectionsRef.current[1] = el;
           }}
-          className="min-h-screen py-20 sm:py-32 opacity-0"
+          className="min-h-screen py-20 sm:py-32"
         >
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
@@ -602,7 +602,7 @@ export default function HomePage({ contributions }: HomePageProps) {
           ref={(el) => {
             sectionsRef.current[2] = el;
           }}
-          className="py-20 sm:py-32 opacity-0"
+          className="py-20 sm:py-32"
         >
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
@@ -623,7 +623,7 @@ export default function HomePage({ contributions }: HomePageProps) {
           ref={(el) => {
             sectionsRef.current[3] = el;
           }}
-          className="py-20 sm:py-32 opacity-0"
+          className="py-20 sm:py-32"
         >
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
@@ -682,7 +682,7 @@ export default function HomePage({ contributions }: HomePageProps) {
           ref={(el) => {
             sectionsRef.current[4] = el;
           }}
-          className="py-20 sm:py-32 opacity-0"
+          className="py-20 sm:py-32"
         >
           <LiveActivity />
 
@@ -710,11 +710,11 @@ export default function HomePage({ contributions }: HomePageProps) {
         </section>
 
         <section
-          id="connect"
+          id="contact"
           ref={(el) => {
             sectionsRef.current[5] = el;
           }}
-          className="py-20 sm:py-32 opacity-0"
+          className="py-20 sm:py-32"
         >
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
             <div className="space-y-6 sm:space-y-8">
@@ -813,96 +813,75 @@ export default function HomePage({ contributions }: HomePageProps) {
                 ))}
               </div>
             </div>
-          </div>
-        </section>
-        {/* Contact Form Section */}
-        <section
-          id="contact"
-          ref={(el) => {
-            sectionsRef.current[6] = el;
-          }}
-          className="py-20 sm:py-32 opacity-0"
-          aria-labelledby="contact-heading"
-        >
-          <div className="mx-auto max-w-xl">
-            <div className="flex flex-col items-center gap-10 md:gap-12">
-              {/* Section Title */}
-              <div className="mx-auto flex max-w-xl flex-col items-center text-center space-y-4">
-                <h2
-                  id="contact-heading"
-                  className="text-3xl sm:text-4xl font-light"
-                >
-                  Get in touch
-                </h2>
+
+            {/* Contact Form */}
+            <div className="lg:col-span-2 mx-auto max-w-md space-y-6 sm:space-y-8">
+              <div className="text-sm text-muted-foreground font-mono ">
+                GET IN TOUCH
+              </div>
+              <div className="space-y-4">
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   Have a project in mind or want to collaborate? Feel free to
-                  reach out! I typically respond within 12hours.
+                  reach out! I typically respond within 12 hours.
                 </p>
+                <form
+                  className="flex w-full flex-col space-y-4"
+                  onSubmit={handleSubmit}
+                  aria-label="Contact form"
+                >
+                  <FieldSet>
+                    <FieldGroup>
+                      <Field>
+                        <FieldLabel htmlFor="name">Name</FieldLabel>
+                        <Input
+                          id="name"
+                          placeholder="Your name"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          required
+                          aria-required="true"
+                          disabled={isSubmitting}
+                        />
+                      </Field>
+                      <Field>
+                        <FieldLabel htmlFor="email">Email</FieldLabel>
+                        <Input
+                          id="email"
+                          placeholder="your.email@example.com"
+                          type="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          required
+                          aria-required="true"
+                          disabled={isSubmitting}
+                        />
+                      </Field>
+                      <Field>
+                        <FieldLabel htmlFor="message">Message</FieldLabel>
+                        <Textarea
+                          id="message"
+                          placeholder="Tell me about your project or just say hi..."
+                          className="min-h-[120px]"
+                          value={formData.message}
+                          onChange={handleInputChange}
+                          required
+                          aria-required="true"
+                          disabled={isSubmitting}
+                        />
+                      </Field>
+                      <Field>
+                        <Button
+                          type="submit"
+                          className="w-full"
+                          disabled={isSubmitting}
+                        >
+                          {isSubmitting ? "Sending..." : "Send message"}
+                        </Button>
+                      </Field>
+                    </FieldGroup>
+                  </FieldSet>
+                </form>
               </div>
-              {/* Contact Form */}
-              <form
-                className="flex w-full flex-col"
-                onSubmit={handleSubmit}
-                aria-label="Contact form"
-              >
-                <FieldSet>
-                  <FieldGroup>
-                    {/* Name Input */}
-                    <Field>
-                      <FieldLabel htmlFor="name">Name</FieldLabel>
-                      <Input
-                        id="name"
-                        placeholder="Your name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        required
-                        aria-required="true"
-                        disabled={isSubmitting}
-                      />
-                    </Field>
-
-                    {/* Email Input */}
-                    <Field>
-                      <FieldLabel htmlFor="email">Email</FieldLabel>
-                      <Input
-                        id="email"
-                        placeholder="your.email@example.com"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                        aria-required="true"
-                        disabled={isSubmitting}
-                      />
-                    </Field>
-
-                    {/* Message Textarea */}
-                    <Field>
-                      <FieldLabel htmlFor="message">Message</FieldLabel>
-                      <Textarea
-                        id="message"
-                        placeholder="Tell me about your project or just say hi..."
-                        className="min-h-[120px]"
-                        value={formData.message}
-                        onChange={handleInputChange}
-                        required
-                        aria-required="true"
-                        disabled={isSubmitting}
-                      />
-                    </Field>
-                    {/* Submit Button */}
-                    <Field>
-                      <Button
-                        type="submit"
-                        className="w-full"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? "Sending..." : "Send message"}
-                      </Button>
-                    </Field>
-                  </FieldGroup>
-                </FieldSet>
-              </form>
             </div>
           </div>
         </section>
